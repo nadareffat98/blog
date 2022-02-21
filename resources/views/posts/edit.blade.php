@@ -6,17 +6,22 @@
   @method('put')
   <div class="mb-3">
     <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" id="title" name="title" aria-describedby="emailHelp" value="{{$post['title']}}"/>
+    <input type="text" class="form-control" id="title" name="Title" aria-describedby="emailHelp" value="{{$post['Title']}}"/>
   </div>
   <div class="mb-3">
     <label for="description" class="form-label">Description</label>
-    <textarea name="description" class="form-control" ></textarea>
+    <textarea name="Description" class="form-control" >{{$post['Description']}}</textarea>
   </div>
   <div class="mb-3 ">
-    <label class="form-label" for="postCreator">Post Creator</label>
-    <select name="postCreator" class="form-control">
-        <option value="1">{{$post['posted_by']}}</option>
-    </select>
+    <label for="postCreator" class="form-label">Post Creator</label>
+                <select name="user_id" class="form-control" id="">
+                    @foreach($users as $user){
+
+                        <option value="{{$user->id}}">{{$user->name}}</option>
+
+                    }
+                    @endforeach
+                </select>
   </div>
   <button type="submit" class="btn btn-primary">Update</button>
 </form>   

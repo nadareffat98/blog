@@ -18,17 +18,24 @@
     @foreach ($posts as $post)
     <tr>
       <th scope="row">{{$post['id']}}</th>
-      <td>{{$post['title']}}</td>
-      <td>{{$post['posted_by']}}</td>
-      <td>{{$post['created_at']}}</td>
-      <td>
+      <td>{{$post['Title']}}</td>
+      <td>{{$post->user->name}}</td>
+      <td>{{$post['created_at']->toDateString()}}</td>
+      <td class="justify-content-start d-flex">
           <a href="{{route('posts.show',$post['id'])}}" class="btn btn-info">View</a>
           <a href="{{route('posts.edit',$post['id'])}}" class="btn btn-primary">Edit</a>
-          <a href="#" class="btn btn-danger">Delete</a>
+          <form method="POST" action="{{route('posts.destroy' ,$post['id'])}}">
+            @csrf
+            @method('DELETE')
+             <button type="submit" class="btn btn-danger" onclick="return confirm('You are about to delete this post ,Are you sure')">Delete</button>
+          </form>
       </td>
     </tr>
     @endforeach
   </tbody>
 </table>
+<div class="row justify-content-start">
+  {{$posts->links()}}
+ </div>
 @endsection
 
