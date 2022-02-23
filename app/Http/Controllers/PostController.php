@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Http\Requests\StorePostRequest;
 
 class PostController extends Controller
 {
     public function index()
     {
         $posts = Post::all();
-        $posts = Post::paginate(5);
+        $posts = Post::paginate(2);
         return view('posts.index',[
             'posts' => $posts
         ]);
@@ -30,10 +31,12 @@ class PostController extends Controller
                 'post' => $post
             ]);
     }
-    public function store()
+    public function store(StorePostRequest $request)
     {
-        $requestData = request()->all();
-        Post::create($requestData);
+        // $requestData = request()->all();
+        $validated = $request->validated();
+        $validated = $request->safe()->only(['Title', 'Description','user_id']);
+        Post::create($validated);
         return redirect()->route('posts.index');
     }
     public function edit($postId)
@@ -45,7 +48,7 @@ class PostController extends Controller
                 'users'=> $users
             ]);
     }
-    public function update($postId)
+    public function update($postId,StorePostRequest $request)
     {
         $requestData = request()->all();
         $post = Post::find($postId)->update(['Title' => $requestData['Title'],

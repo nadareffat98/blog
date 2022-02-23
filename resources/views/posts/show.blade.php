@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title') show @endsection
-@section('put here')
+@section('content')
 <div class="card mt-3">
   <h5 class="card-header">Post Info</h5>
   <div class="card-body">

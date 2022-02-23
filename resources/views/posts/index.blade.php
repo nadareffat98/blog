@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title') posts @endsection
-@section('put here')
+@section('content')
     <div class="text-center mt-3">
            <a href="{{route('posts.create')}}" class="btn btn-success text-center"> Create Post</a>
     </div>
@@ -9,6 +9,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Title</th>
+      <th scope="col">Slug</th>
       <th scope="col">Posted By</th>
       <th scope="col">Created At</th>
       <th scope="col">Actions</th>
@@ -19,6 +20,7 @@
     <tr>
       <th scope="row">{{$post['id']}}</th>
       <td>{{$post['Title']}}</td>
+      <td>{{$post->slug}}</td>
       <td>{{$post->user->name}}</td>
       <td>{{$post['created_at']->toDateString()}}</td>
       <td class="justify-content-start d-flex">

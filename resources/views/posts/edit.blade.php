@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title') edit @endsection
-@section('put here')
+@section('content')
 <form method="post" action="{{route('posts.update',$post['id'])}}" class="mt-5">
   @csrf
   @method('put')
