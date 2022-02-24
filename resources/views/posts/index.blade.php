@@ -18,10 +18,10 @@
   <tbody>
     @foreach ($posts as $post)
     <tr>
-      <th scope="row">{{$post['id']}}</th>
-      <td>{{$post['Title']}}</td>
+      <th scope="row">{{$post->id}}</th>
+      <td>{{$post->Title}}</td>
       <td>{{$post->slug}}</td>
-      <td>{{$post->user->name}}</td>
+      <td>{{$post->user['name']}}</td>
       <td>{{$post['created_at']->toDateString()}}</td>
       <td class="justify-content-start d-flex">
           <a href="{{route('posts.show',$post['id'])}}" class="btn btn-info">View</a>

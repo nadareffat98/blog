@@ -11,8 +11,9 @@ class PostController extends Controller
 {
     public function index()
     {
+        
         $posts = Post::all();
-        $posts = Post::paginate(2);
+        $posts = Post::paginate(5);
         return view('posts.index',[
             'posts' => $posts
         ]);
@@ -33,10 +34,10 @@ class PostController extends Controller
     }
     public function store(StorePostRequest $request)
     {
-        // $requestData = request()->all();
-        $validated = $request->validated();
-        $validated = $request->safe()->only(['Title', 'Description','user_id']);
-        Post::create($validated);
+        $requestData = request()->all();
+        //$validated = $request->validated();
+        //$validated = $request->safe()->only(['Title', 'Description']);
+        Post::create($requestData);
         return redirect()->route('posts.index');
     }
     public function edit($postId)
