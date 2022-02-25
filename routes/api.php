@@ -28,6 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('posts',[PostController::class,'index'])->middleware('auth:sanctum');;
 Route::get('posts/{post}',[PostController::class,'show'])->middleware('auth:sanctum');;
 Route::post('posts',[PostController::class,'store'])->middleware('auth:sanctum');;
+
+
+
+
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',

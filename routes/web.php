@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\GithubLoginController;
-
+use App\Models\User;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,7 +39,7 @@ Route::get('/auth/redirect', function () {
 })->name('github.login');
  
 Route::get('/auth/callback', function () {
-    $githubUser = Socialite::driver('github')->user();
+    $githubUser = Socialite::driver('github')->stateless()->user();
  
     $user = User::where('github_id', $githubUser->id)->first();
  
@@ -50,8 +50,9 @@ Route::get('/auth/callback', function () {
         ]);
     } else {
         $user = User::create([
-            'name' => $githubUser->name,
+            'name' => $githubUser->nickname,
             'email' => $githubUser->email,
+            'password'=> '123456',
             'github_id' => $githubUser->id,
             'github_token' => $githubUser->token,
             'github_refresh_token' => $githubUser->refreshToken,
@@ -62,4 +63,37 @@ Route::get('/auth/callback', function () {
  
     return redirect('/posts');
 });
+
+
+
+Route::get('/auth/google/redirect', function () {
+    return Socialite::driver('google')->redirect();
+})->name('google.login');
+ 
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->stateless()->user();
+ 
+    $user = User::where('google_id', $googleUser->id)->first();
+ 
+    if ($user) {
+        {
+            Auth::login($user);
+            return redirect('posts');
+        }
+    } else {
+        $user = User::create([
+            'name' => $googleUser->name,
+            'email' => 'null',
+            'password'=> '123456',
+            'google_id' => $googleUser->id,
+            'google_token' => $googleUser->token,
+            'google_refresh_token' => $googleUser->refreshToken,
+        ]);
+    }
+ 
+    Auth::login($user);
+ 
+    return redirect('/posts');
+});
+
 

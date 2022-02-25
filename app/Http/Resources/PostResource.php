@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\JsonResource;
-use  App\Http\Resources\User;
+use  App\Http\Resources\UserResource;
 
 class PostResource extends JsonResource
 {
